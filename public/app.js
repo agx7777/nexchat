@@ -38,6 +38,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const messagesContainer = document.getElementById('messages-container');
     const messageInput = document.getElementById('message-input');
     const sendMsgBtn = document.getElementById('send-msg-btn');
+    const backToSidebarBtn = document.getElementById('back-to-sidebar-btn');
     
     // Group Modal
     const newGroupBtn = document.getElementById('new-group-btn');
@@ -489,10 +490,14 @@ document.addEventListener('DOMContentLoaded', () => {
         if (e.key === 'Enter') sendMessage();
     });
 
-    // Mobile Back button handler (optional logic, hooking into avatar click to go back)
-    chatHeaderAvatar.addEventListener('click', () => {
+    // Mobile Back button handler
+    backToSidebarBtn.addEventListener('click', () => {
         if (window.innerWidth <= 768) {
             document.body.classList.remove('chat-active');
         }
+    });
+    
+    chatHeaderAvatar.addEventListener('click', () => {
+        // Removed back functionality from avatar
     });
 });

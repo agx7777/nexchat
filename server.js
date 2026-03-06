@@ -7,6 +7,11 @@ const app = express();
 const server = http.createServer(app);
 const io = new Server(server);
 
+// Health check endpoint for deployment platforms (like Render, Heroku)
+app.get('/health', (req, res) => {
+    res.status(200).json({ status: 'OK' });
+});
+
 // Serve static files from the public directory
 app.use(express.static(path.join(__dirname, 'public')));
 

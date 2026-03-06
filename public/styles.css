@@ -847,8 +847,16 @@ input[type="text"]::placeholder {
     min-width: 100px;
 }
 
+.mobile-only {
+    display: none !important;
+}
+
 /* Responsive adjustments */
 @media (max-width: 768px) {
+    .mobile-only {
+        display: inline-flex !important;
+    }
+
     #main-view {
         padding: 0;
         gap: 0;
@@ -862,6 +870,8 @@ input[type="text"]::placeholder {
     .sidebar {
         width: 100%;
         position: absolute;
+        left: 0;
+        top: 0;
         z-index: 10;
         height: 100%;
         transition: transform 0.3s ease;
@@ -870,6 +880,8 @@ input[type="text"]::placeholder {
     .chat-area {
         width: 100%;
         position: absolute;
+        left: 0;
+        top: 0;
         height: 100%;
     }
 
