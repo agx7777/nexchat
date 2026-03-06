@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NexChat - Real-time Messaging</title>
+    <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Remix Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- App Container -->
+    <div id="app-container">
+        <!-- Background Orbs for aesthetic -->
+        <div class="bg-orb orb-1"></div>
+        <div class="bg-orb orb-2"></div>
+        <div class="bg-orb orb-3"></div>
+
+        <!-- Login View -->
+        <div id="login-view" class="view active">
+            <div class="login-card glass-panel">
+                <div class="logo-container">
+                    <i class="ri-chat-smile-3-line logo-icon"></i>
+                    <h1 class="logo-text">NexChat</h1>
+                </div>
+                <p class="subtitle">Connect instantly. No numbers. Just nicknames.</p>
+                <div class="input-group">
+                    <i class="ri-user-line input-icon"></i>
+                    <input type="text" id="nickname-input" placeholder="Choose a nickname" autocomplete="off" spellcheck="false" maxlength="20">
+                </div>
+                <button id="login-btn" class="primary-btn">
+                    <span>Enter Chat</span>
+                    <i class="ri-arrow-right-line"></i>
+                </button>
+                <p id="login-error" class="error-msg"></p>
+            </div>
+        </div>
+
+        <!-- Main Chat View -->
+        <div id="main-view" class="view hidden">
+            <!-- Sidebar -->
+            <aside class="sidebar glass-panel">
+                <div class="sidebar-header">
+                    <div class="user-profile">
+                        <div class="avatar gradient-bg" id="my-avatar">U</div>
+                        <div class="user-info">
+                            <span class="my-nickname" id="my-nickname-display">User</span>
+                            <span class="status online"><i class="ri-checkbox-blank-circle-fill"></i> Online</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="search-bar">
+                    <i class="ri-search-line"></i>
+                    <input type="text" id="search-input" placeholder="Find friends...">
+                    <button id="search-btn" class="icon-btn"><i class="ri-user-add-line"></i></button>
+                </div>
+                
+                <!-- Search Result Dropdown (hidden by default) -->
+                <div id="search-result-container" class="search-result hidden">
+                    <div class="result-info">
+                        <div class="avatar small-avatar" id="result-avatar">?</div>
+                        <span id="result-nickname">User</span>
+                    </div>
+                    <button id="add-friend-btn" class="small-btn">Add Friend</button>
+                    <button id="close-search-btn" class="icon-btn text-muted"><i class="ri-close-line"></i></button>
+                </div>
+
+                <div class="sidebar-nav">
+                    <button class="nav-btn active" data-tab="friends"><i class="ri-user-smile-line"></i> Friends</button>
+                    <button class="nav-btn" data-tab="groups"><i class="ri-group-line"></i> Groups</button>
+                </div>
+
+                <div class="list-container custom-scrollbar" id="friends-list-container">
+                    <ul class="contact-list" id="friends-list">
+                        <!-- Friends injected dynamically -->
+                    </ul>
+                </div>
+
+                <div class="list-container custom-scrollbar hidden" id="groups-list-container">
+                    <div class="list-header-actions">
+                        <button id="new-group-btn" class="action-link"><i class="ri-add-line"></i> New Group</button>
+                    </div>
+                    <ul class="contact-list" id="groups-list">
+                        <!-- Groups injected dynamically -->
+                    </ul>
+                </div>
+            </aside>
+
+            <!-- Chat Area -->
+            <main class="chat-area glass-panel">
+                <!-- Welcome Screen (when no chat is active) -->
+                <div id="welcome-screen" class="empty-state active">
+                    <div class="empty-icon-container">
+                        <i class="ri-message-3-line"></i>
+                    </div>
+                    <h2>Welcome to NexChat</h2>
+                    <p>Select a friend or group from the sidebar to start messaging.</p>
+                </div>
+
+                <!-- Active Chat Screen (hidden by default) -->
+                <div id="active-chat-screen" class="chat-container hidden">
+                    <!-- Chat Header -->
+                    <header class="chat-header">
+                        <div class="chat-target-info">
+                            <div class="avatar" id="chat-header-avatar">?</div>
+                            <div class="target-details">
+                                <h3 id="chat-header-name">Friend Name</h3>
+                                <span id="chat-header-status" class="status-text">Online</span>
+                            </div>
+                        </div>
+                        <div class="chat-actions">
+                            <button class="icon-btn" title="Coming soon"><i class="ri-phone-line"></i></button>
+                            <button class="icon-btn" title="Coming soon"><i class="ri-video-add-line"></i></button>
+                            <button class="icon-btn" title="Options"><i class="ri-more-2-fill"></i></button>
+                        </div>
+                    </header>
+
+                    <!-- Messages Container -->
+                    <div class="messages-wrapper custom-scrollbar" id="messages-container">
+                        <!-- Messages injected dynamically -->
+                        <div class="message-feed" id="message-feed"></div>
+                    </div>
+
+                    <!-- Input Area -->
+                    <footer class="chat-input-area">
+                        <button class="icon-btn attach-btn" title="Coming soon"><i class="ri-attachment-2"></i></button>
+                        <div class="input-wrapper">
+                            <input type="text" id="message-input" placeholder="Type a message..." autocomplete="off">
+                            <button class="icon-btn emoji-btn" title="Coming soon"><i class="ri-emotion-happy-line"></i></button>
+                        </div>
+                        <button id="send-msg-btn" class="primary-btn send-btn">
+                            <i class="ri-send-plane-fill"></i>
+                        </button>
+                    </footer>
+                </div>
+            </main>
+        </div>
+
+        <!-- Create Group Modal (Hidden) -->
+        <div id="create-group-modal" class="modal-overlay hidden">
+            <div class="modal-card glass-panel">
+                <div class="modal-header">
+                    <h2>Create New Group</h2>
+                    <button id="close-modal-btn" class="icon-btn"><i class="ri-close-line"></i></button>
+                </div>
+                <div class="modal-body">
+                    <div class="input-group">
+                        <i class="ri-group-line input-icon"></i>
+                        <input type="text" id="group-name-input" placeholder="Group Name" maxlength="30">
+                    </div>
+                    <div class="friend-selection">
+                        <p class="section-label">Select Members:</p>
+                        <div class="selectable-list custom-scrollbar" id="modal-friends-list">
+                            <!-- Selectable friends injected here -->
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button id="cancel-group-btn" class="secondary-btn">Cancel</button>
+                    <button id="confirm-create-group-btn" class="primary-btn">Create</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Socket.io -->
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
